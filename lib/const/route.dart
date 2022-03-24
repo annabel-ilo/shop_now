@@ -3,3 +3,4 @@ const productOverviewScreenRoute = "/product-overview-screen/";
 const cartScreenRoute = "/cart-screen/";
 const orderScreenRoute = "/order-screen/";
 const userProductsRoute = "/user-products/";
+const editProductScreenRoute = "/edit-product/";

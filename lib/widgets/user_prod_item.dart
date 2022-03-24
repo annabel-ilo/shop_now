@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../const/route.dart';
+
 class UserProductsItem extends StatelessWidget {
   const UserProductsItem({
     Key? key,
@@ -18,10 +20,11 @@ class UserProductsItem extends StatelessWidget {
       trailing: SizedBox(
         width: 100,
         child: Row(
-          
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 icon: Icon(Icons.edit),
                 color: Theme.of(context).primaryColor),
             IconButton(
