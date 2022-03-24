@@ -11,6 +11,7 @@ import 'package:shop_now/screens/product_overview.dart';
 import 'package:shop_now/screens/user_product.dart';
 
 import 'models/prod_provider.dart';
+import 'screens/edit_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
               const ProductsOverviewScreen(),
           cartScreenRoute: (context) => const CartScreen(),
           orderScreenRoute: (context) => const OrdersScreen(),
-          userProductsRoute:(context) => const UserProductsScreen()
+          userProductsRoute:(context) => const UserProductsScreen(),
+          editProductScreenRoute :(context) => const EditProductScreen(),
         },
       ),
     );
