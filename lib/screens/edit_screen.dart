@@ -39,6 +39,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _saveForm() {
+    var isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
     _form.currentState!.save();
     print(_editedProduct.description);
     print(_editedProduct.id);
@@ -49,6 +53,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      // if (_imageUrlController.text.isEmpty ||
+      //     _imageUrlController.text.endsWith('.pdf') &&
+      //         _imageUrlController.text.endsWith('.jpeg') &&
+      //         _imageUrlController.text.endsWith('.jpg') &&
+      //         _imageUrlController.text.endsWith('.png') ||
+      //     _imageUrlController.text.startsWith('http') &&
+      //         _imageUrlController.text.startsWith('https')) {
+      //   return;
+      // }
+
       setState(() {});
     }
   }
@@ -71,6 +85,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   onFieldSubmitted: (val) {
                     FocusScope.of(context).requestFocus(_priceFocusNode);
                   },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Add a title';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     _editedProduct = Product(
                       id: " ",
@@ -88,6 +108,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   onFieldSubmitted: (val) {
                     FocusScope.of(context).requestFocus(_descriptionFocusNode);
                   },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Add an Amount';
+                    }
+                    if (double.tryParse(value) == null) {
+                      return 'enter a valid amount';
+                    }
+                    if (double.parse(value) <= 0) {
+                      return 'amount must be greater than 0';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     _editedProduct = Product(
                       id: " ",
@@ -103,6 +135,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   textInputAction: TextInputAction.next,
                   focusNode: _descriptionFocusNode,
                   keyboardType: TextInputType.multiline,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'enter a description';
+                    }
+                    if (value.length < 10) {
+                      return 'add more info';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     _editedProduct = Product(
                       id: " ",
@@ -116,7 +157,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    height: 100,
+                    height: 120,
                     width: 100,
                     margin: EdgeInsets.only(top: 8, right: 10),
                     decoration: BoxDecoration(
@@ -138,6 +179,22 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         textInputAction: TextInputAction.done,
                         controller: _imageUrlController,
                         focusNode: _imageUrlFocusNode,
+                        // validator: (value) {
+                        //   if (value!.isEmpty) {
+                        //     return 'enter a url';
+                        //   }
+                        //   if ((value.endsWith('.pdf') &&
+                        //       value.endsWith('.jpeg') &&
+                        //       value.endsWith('.jpg') &&
+                        //       value.endsWith('.png'))) {
+                        //     return 'image must be either a pdf , jpeg , jpg or png ';
+                        //   }
+                        //   if ((value.startsWith('http') &&
+                        //       value.startsWith('https'))) {
+                        //     return 'return a valid link';
+                        //   }
+                        //   return null;
+                        // },
                         onFieldSubmitted: (_) {
                           _saveForm();
                         },
