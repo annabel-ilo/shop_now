@@ -62,4 +62,14 @@ class Products with ChangeNotifier {
     // _items.insert(0, newProduct);  for adding item at the top of the list.
     notifyListeners();
   }
+
+  void updateProduct(String id, Product newProduct) {
+    final indexProd = _items.indexWhere((prod) => prod.id == id);
+    if (indexProd >= 0) {
+      _items[indexProd] = newProduct;
+      notifyListeners();
+    } else {
+      print('....');
+    }
+  }
 }
