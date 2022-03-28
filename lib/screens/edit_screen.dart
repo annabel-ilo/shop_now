@@ -20,7 +20,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   var isInit = true;
 
   var _editedProduct = Product(
-    id:null.toString(),
+    id: " ",
     title: " ",
     description: " ",
     price: 0,
@@ -41,16 +41,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   @override
-  void dispose() {
-    _priceFocusNode.dispose();
-    _descriptionFocusNode.dispose();
-    _imageUrlController.dispose();
-    _imageUrlFocusNode.dispose();
-    _imageUrlController.removeListener(_updateImageUrl);
-    super.dispose();
-  }
-
-  @override
   void didChangeDependencies() {
     if (isInit) {
       final productId = ModalRoute.of(context)!.settings.arguments as String;
@@ -68,17 +58,27 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.didChangeDependencies();
   }
 
+  @override
+  void dispose() {
+    _priceFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    _imageUrlController.dispose();
+    _imageUrlFocusNode.dispose();
+    _imageUrlController.removeListener(_updateImageUrl);
+    super.dispose();
+  }
+
   void _saveForm() {
     var isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
     _form.currentState!.save();
-    // ignore: unnecessary_null_comparison
-    if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false).updateProduct(_editedProduct.id, _editedProduct);
-    } else {
+    if (_editedProduct.id == null) {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
     }
     Navigator.of(context).pop();
   }
@@ -157,7 +157,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   },
                   onSaved: (value) {
                     _editedProduct = Product(
-                      id:_editedProduct.id ,
+                      id: _editedProduct.id,
                       title: _editedProduct.title,
                       description: _editedProduct.description,
                       price: double.parse(value!),

@@ -68,9 +68,7 @@ class Products with ChangeNotifier {
     if (indexProd >= 0) {
       _items[indexProd] = newProduct;
       notifyListeners();
-    } else {
-      print('....');
-    }
+    } else {}
   }
 
   void deleteProduct(String id) {
