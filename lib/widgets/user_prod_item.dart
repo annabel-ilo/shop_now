@@ -5,10 +5,12 @@ import '../const/route.dart';
 class UserProductsItem extends StatelessWidget {
   const UserProductsItem({
     Key? key,
+    required this.id,
     required this.title,
     required this.imageUrl,
   }) : super(key: key);
 
+  final String id;
   final String title;
   final String imageUrl;
 
@@ -23,7 +25,8 @@ class UserProductsItem extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () {
-                  
+                  Navigator.of(context)
+                      .pushNamed(editProductScreenRoute, arguments: id);
                 },
                 icon: Icon(Icons.edit),
                 color: Theme.of(context).primaryColor),
