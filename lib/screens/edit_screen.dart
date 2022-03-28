@@ -16,6 +16,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+
+  var isInit = true;
+
   var _editedProduct = Product(
     id: "",
     title: " ",
@@ -23,6 +26,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
     price: 0,
     imageUrl: " ",
   );
+
+  var _initProduct = {
+    'title': '',
+    'description': '',
+    'price': '',
+    'imageUrl': '',
+  };
 
   @override
   void initState() {
@@ -38,6 +48,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _imageUrlFocusNode.dispose();
     _imageUrlController.removeListener(_updateImageUrl);
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (isInit) {
+      final productId = ModalRoute.of(context)!.settings.arguments as String;
+      _editedProduct = Provider.of<Products>(context).findById(productId);
+      _initProduct = {
+        'title': _editedProduct.title,
+        'description': _editedProduct.description,
+        'price': _editedProduct.price.toString(),
+        // 'imageUrl': _editedProduct.imageUrl,
+        'imageUrl': '',
+      };
+      _imageUrlController.text = _editedProduct.imageUrl;
+    }
+    isInit = false;
+    super.didChangeDependencies();
   }
 
   void _saveForm() {
@@ -79,6 +107,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: [
               TextFormField(
+                  initialValue: _initProduct['title'],
                   decoration: const InputDecoration(labelText: 'Title'),
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (val) {
@@ -100,6 +129,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     );
                   }),
               TextFormField(
+                  initialValue: _initProduct['price'],
                   decoration: const InputDecoration(labelText: 'Price'),
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
@@ -129,6 +159,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     );
                   }),
               TextFormField(
+                  initialValue: _initProduct['description'],
                   decoration: const InputDecoration(labelText: 'Description'),
                   maxLines: 3,
                   textInputAction: TextInputAction.next,

@@ -25,20 +25,21 @@ class UserProductsScreen extends StatelessWidget {
           )
         ],
       ),
-      drawer:AppDrawer(),
+      drawer: AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
             itemCount: productsData.items.length,
             itemBuilder: (context, index) => Column(
-              children: [
-                UserProductsItem(
+                  children: [
+                    UserProductsItem(
+                      id: productsData.items[index].id,
                       title: productsData.items[index].title,
                       imageUrl: productsData.items[index].imageUrl,
                     ),
                     Divider()
-              ],
-            )),
+                  ],
+                )),
       ),
     );
   }
