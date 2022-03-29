@@ -43,7 +43,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (isInit) {
-      final productId = ModalRoute.of(context)!.settings.arguments as String;
+      final productId = ModalRoute.of(context)!.settings.arguments as String ;
       _editedProduct = Provider.of<Products>(context).findById(productId);
       _initProduct = {
         'title': _editedProduct.title,
@@ -74,7 +74,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState!.save();
-    if (_editedProduct.id == null) {
+    if (_editedProduct.id != null) {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
     } else {
       Provider.of<Products>(context, listen: false)
@@ -82,6 +82,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     Navigator.of(context).pop();
   }
+
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
