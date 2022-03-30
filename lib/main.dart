@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.amber,
           fontFamily: 'Lato',
         ),
-        home: ProductsOverviewScreen(),
+        home: const ProductsOverviewScreen(),
         routes: {
           productDetailScreenRoute: (context) => const ProductDetailScreen(),
           productOverviewScreenRoute: (context) =>

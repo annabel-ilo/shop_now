@@ -76,12 +76,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState!.save();
-    if (_editedProduct.id != null) {
+    // if (_editedProduct.id != null) 
+    
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
-    } else {
+    
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-    }
+    
     Navigator.of(context).pop();
   }
 
@@ -199,7 +200,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   Container(
                     height: 120,
                     width: 100,
-                    margin: EdgeInsets.only(top: 8, right: 10),
+                    margin: const EdgeInsets.only(top: 8, right: 10),
                     decoration: BoxDecoration(
                       border: Border.all(width: 1, color: Colors.grey),
                     ),
@@ -251,10 +252,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: _saveForm,
-                child: Text(
+                child: const Text(
                   'Submit',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
