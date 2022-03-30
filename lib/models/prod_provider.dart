@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -54,32 +53,33 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future <void> addProduct(Product product) {
-    const url =
-        'https://shop-now-ee090-default-rtdb.firebaseio.com/products.json';
+  Future<void> addProduct(Product product) {
+    const url = 'https://shop-now-ee090-default-rtdb.firebaseio.com/products.json';
     return http
         .post(
-          url as Uri,
-          body: json.encode({
-            'title': product.title,
-            'description': product.description,
-            'isFavorite': product.isFavorite,
-            'price': product.price,
-            'imageUrl': product.imageUrl,
-          }),
-        )
+      url as Uri,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'isFavorite': product.isFavorite,
+        'price': product.price,
+        'imageUrl': product.imageUrl,
+      }),
+    )
         .then((response) {
-    final newProduct = Product(
-      title: product.title,
-      description: product.description,
-      id: json.decode(response.body)['name'],
-      price: product.price,
-      imageUrl: product.imageUrl,
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct);  for adding item at the top of the list.
-    notifyListeners();
-    } );
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        id: json.decode(response.body)['name'],
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct);  for adding item at the top of the list.
+      notifyListeners();
+    }).catchError((error) {
+      throw error;
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
