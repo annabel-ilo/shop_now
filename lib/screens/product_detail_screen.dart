@@ -20,26 +20,26 @@ class ProductDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Container(
+          SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height / 3,
               child: Image.network(
                 loadedProduct.imageUrl,
                 fit: BoxFit.cover,
               )),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             '\$${loadedProduct.price}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: double.infinity,
             child: Text(
-              '${loadedProduct.description}',
+              loadedProduct.description,
               textAlign: TextAlign.center,
               softWrap: true,
             ),

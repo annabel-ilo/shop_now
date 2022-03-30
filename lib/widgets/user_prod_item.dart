@@ -27,6 +27,7 @@ class UserProductsItem extends StatelessWidget {
           children: [
             IconButton(
                 onPressed: () {
+                  print('a text: $id');
                   Navigator.of(context)
                       .pushNamed(editProductScreenRoute, arguments: id);
                 },
