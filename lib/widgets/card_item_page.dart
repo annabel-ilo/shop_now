@@ -30,7 +30,7 @@ class CardItem extends StatelessWidget {
         ),
         color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
       ),
       child: Card(
           margin: const EdgeInsets.symmetric(
