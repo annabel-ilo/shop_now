@@ -43,8 +43,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void didChangeDependencies() {
     if (isInit) {
-      final productId = ModalRoute.of(context)!.settings.arguments as String ;
-      _editedProduct = Provider.of<Products>(context).findById(productId);
+      if (ModalRoute.of(context)?.settings.arguments != null) {
+        final productId = ModalRoute.of(context)?.settings.arguments as String;
+        _editedProduct = Provider.of<Products>(context).findById(productId);
+      }
       _initProduct = {
         'title': _editedProduct.title,
         'description': _editedProduct.description,
@@ -62,9 +64,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void dispose() {
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
+    _imageUrlController.removeListener(_updateImageUrl);
     _imageUrlController.dispose();
     _imageUrlFocusNode.dispose();
-    _imageUrlController.removeListener(_updateImageUrl);
     super.dispose();
   }
 
@@ -82,7 +84,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     Navigator.of(context).pop();
   }
-
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
