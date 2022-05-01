@@ -5,7 +5,7 @@ import 'package:shop_now/models/cart.dart';
 import 'package:shop_now/widgets/app_drawer.dart';
 import 'package:shop_now/widgets/badge.dart';
 
-
+import '../models/prod_provider.dart';
 import '../widgets/product_grid.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
@@ -17,6 +17,24 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorite = false;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<Products>(context, listen: false)
+        .fetchAndUpdateProduct()
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +80,14 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: ProductGrid(
-        showFavs: _showOnlyFavorite,
-      ),
+      body: _isLoading
+          
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductGrid(
+              showFavs: _showOnlyFavorite,
+            ),
     );
   }
 }

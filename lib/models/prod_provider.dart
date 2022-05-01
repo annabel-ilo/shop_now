@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:http/http.dart' as http;
 
 import 'product.dart';
 
 class Products with ChangeNotifier {
-  final List<Product> _items = [
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -54,12 +54,36 @@ class Products with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
+  Future<void> fetchAndUpdateProduct() async {
+    const url = 'https://shop-now-ee090-default-rtdb.firebaseio.com.json';
+    try {
+      final response = await http.get(Uri.parse(url));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+      extractedData.forEach((prodId, prodData) {
+        loadedProducts.add(
+          Product(
+            id: prodId,
+            title: prodData['title'],
+            description: prodData['description'],
+            price: prodData['price'],
+            imageUrl: prodData['imageUrl'],
+          ),
+        );
+      });
+      _items = loadedProducts;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     const url =
         'https://shop-now-ee090-default-rtdb.firebaseio.com/products.json';
     try {
       final response = await http.post(
-        url as Uri,
+        Uri.parse(url),
         body: json.encode({
           'title': product.title,
           'description': product.description,
@@ -84,9 +108,19 @@ class Products with ChangeNotifier {
     }
   }
 
-  void updateProduct(String id, Product newProduct) {
+  void updateProduct(String id, Product newProduct) async {
     final indexProd = _items.indexWhere((prod) => prod.id == id);
     if (indexProd >= 0) {
+      final url =
+          'https://shop-now-ee090-default-rtdb.firebaseio.com/products/$id.json';
+      await http.patch(Uri.parse(url),
+          body: json.encode({
+           'title': newProduct.title,
+          'description': newProduct.description,
+          'isFavorite': newProduct.isFavorite,
+          'price': newProduct.price,
+          'imageUrl': newProduct.imageUrl,
+          }));
       _items[indexProd] = newProduct;
       notifyListeners();
     } else {}

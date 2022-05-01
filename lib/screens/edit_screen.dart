@@ -118,7 +118,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
       // if (_imageUrlController.text.isEmpty ||
-      //     _imageUrlController.text.endsWith('.pdf') &&
+       //    _imageUrlController.text.endsWith('.pdf') &&
       //         _imageUrlController.text.endsWith('.jpeg') &&
       //         _imageUrlController.text.endsWith('.jpg') &&
       //         _imageUrlController.text.endsWith('.png') ||
