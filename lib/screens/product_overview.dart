@@ -80,14 +80,19 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: _isLoading
+      body: 
+      
+      // _isLoading
           
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ProductGrid(
+        
+      //     ? const Center(
+      //         child: CircularProgressIndicator(),
+      //       )
+      //     : 
+      ProductGrid(
               showFavs: _showOnlyFavorite,
             ),
+            
     );
   }
 }

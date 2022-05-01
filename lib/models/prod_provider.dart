@@ -115,11 +115,11 @@ class Products with ChangeNotifier {
           'https://shop-now-ee090-default-rtdb.firebaseio.com/products/$id.json';
       await http.patch(Uri.parse(url),
           body: json.encode({
-           'title': newProduct.title,
-          'description': newProduct.description,
-          'isFavorite': newProduct.isFavorite,
-          'price': newProduct.price,
-          'imageUrl': newProduct.imageUrl,
+            'title': newProduct.title,
+            'description': newProduct.description,
+            'isFavorite': newProduct.isFavorite,
+            'price': newProduct.price,
+            'imageUrl': newProduct.imageUrl,
           }));
       _items[indexProd] = newProduct;
       notifyListeners();
@@ -127,7 +127,17 @@ class Products with ChangeNotifier {
   }
 
   void deleteProduct(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+    final url =
+        'https://shop-now-ee090-default-rtdb.firebaseio.com/products/$id.json';
+    final exitingProductIndex = _items.indexWhere((prod) => prod.id == id);
+    Product? exitingProduct = _items[exitingProductIndex];
+    _items.removeAt(exitingProductIndex);
+    notifyListeners();
+    http.delete(Uri.parse(url)).then((_) {
+      exitingProduct = null;
+    }).catchError((_) {
+      _items.insert(exitingProductIndex, exitingProduct!);
+    });
     notifyListeners();
   }
 }
