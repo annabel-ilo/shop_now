@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'http_exception.dart';
 import 'product.dart';
 
 class Products with ChangeNotifier {
@@ -126,18 +127,20 @@ class Products with ChangeNotifier {
     } else {}
   }
 
-  void deleteProduct(String id) {
+  Future <void> deleteProduct(String id) async {
     final url =
         'https://shop-now-ee090-default-rtdb.firebaseio.com/products/$id.json';
     final exitingProductIndex = _items.indexWhere((prod) => prod.id == id);
     Product? exitingProduct = _items[exitingProductIndex];
     _items.removeAt(exitingProductIndex);
     notifyListeners();
-    http.delete(Uri.parse(url)).then((_) {
-      exitingProduct = null;
-    }).catchError((_) {
-      _items.insert(exitingProductIndex, exitingProduct!);
-    });
-    notifyListeners();
+    final response = await http.delete(Uri.parse(url));
+    if (response.statusCode >= 400) {
+      _items.insert(exitingProductIndex, exitingProduct);
+      notifyListeners();
+
+      throw HttpException('Could not delete product');
+    }
+    exitingProduct = null;
   }
 }
