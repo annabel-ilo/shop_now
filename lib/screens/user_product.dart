@@ -4,7 +4,7 @@ import 'package:shop_now/widgets/user_prod_item.dart';
 
 import '../const/route.dart';
 import '../models/prod_provider.dart';
-import '../models/product.dart';
+
 import '../widgets/app_drawer.dart';
 
 class UserProductsScreen extends StatelessWidget {
