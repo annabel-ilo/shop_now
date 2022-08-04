@@ -13,39 +13,48 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  var _isLoading = false;
+  Future ?_orderFuture;
+
+  Future _obtainOrderFuture() {
+    return Provider.of<Orders>(context).fetchAndSetOrder();
+  }
 
   @override
   void initState() {
-    _isLoading = true;
-
-    Provider.of<Orders>(context, listen: false)
-        .fetchAndSetOrder()
-        .then((value) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-
+    _orderFuture = _obtainOrderFuture();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final orderData = Provider.of<Orders>(context);
+    // final orderData = Provider.of<Orders>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Your Orders'),
-      ),
-      drawer: const AppDrawer(),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: orderData.orders.length,
-              itemBuilder: (context, index) => OrderItem(
-                order: orderData.orders[index],
-              ),
-            ),
-    );
+        appBar: AppBar(
+          title: const Text('Your Orders'),
+        ),
+        drawer: const AppDrawer(),
+        body: FutureBuilder(
+          future: _orderFuture,
+              //Provider.of<Orders>(context, listen: false).fetchAndSetOrder(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (snapshot.error != null) {
+                return const Center(child: Text('Something went wrong'));
+              } else {
+                return Consumer<Orders>(builder: (context, orderData, child) {
+                  ListView.builder(
+                    itemCount: orderData.orders.length,
+                    itemBuilder: (context, index) => OrderItem(
+                      order: orderData.orders[index],
+                    ),
+                  );
+                  return const SizedBox();
+                });
+              }
+            }
+          },
+        ));
   }
 }

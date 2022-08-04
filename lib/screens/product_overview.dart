@@ -75,6 +75,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                 Icons.shopping_cart,
               ),
               onPressed: () {
+               
                 Navigator.of(context).pushNamed(cartScreenRoute);
               },
             ),
@@ -82,19 +83,17 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: const AppDrawer(),
-      body: 
-      
-      // _isLoading
-          
-        
-      //     ? const Center(
-      //         child: CircularProgressIndicator(),
-      //       )
-      //     : 
-      ProductGrid(
-              showFavs: _showOnlyFavorite,
-            ),
-            
+      body:
+
+          // _isLoading
+
+          //     ? const Center(
+          //         child: CircularProgressIndicator(),
+          //       )
+          //     :
+          ProductGrid(
+        showFavs: _showOnlyFavorite,
+      ),
     );
   }
 }
