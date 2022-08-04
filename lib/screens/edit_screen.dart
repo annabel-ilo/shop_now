@@ -80,45 +80,45 @@ class _EditProductScreenState extends State<EditProductScreen> {
     setState(() {
       isLoading = true;
     });
-    //if (_editedProduct.id != null) 
-      Provider.of<Products>(context, listen: false)
-          .updateProduct(_editedProduct.id, _editedProduct);
-      Navigator.of(context).pop();
-      setState(() {
-        isLoading = false;
-      });
-    
-      try {
-        await Provider.of<Products>(context, listen: false)
-            .addProduct(_editedProduct);
-      } catch (error) {
-        await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('An error occurred'),
-            content: const Text('Something went wrong'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Okay'))
-            ],
-          ),
-        );
-      } finally {
-        setState(() {
-          isLoading = false;
-        });
-        Navigator.of(context).pop();
-      }
-    
+    //if (_editedProduct.id != null)
+    Provider.of<Products>(context, listen: false)
+        .updateProduct(_editedProduct.id, _editedProduct);
+
+    try {
+      await Provider.of<Products>(context, listen: false)
+          .addProduct(_editedProduct);
+    } catch (error) {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('An error occurred'),
+          content: const Text('Something went wrong'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Okay'))
+          ],
+        ),
+      );
+    }
+    // finally {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    //   Navigator.of(context).pop();
+    // }
+    setState(() {
+      isLoading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
       // if (_imageUrlController.text.isEmpty ||
-       //    _imageUrlController.text.endsWith('.pdf') &&
+      //    _imageUrlController.text.endsWith('.pdf') &&
       //         _imageUrlController.text.endsWith('.jpeg') &&
       //         _imageUrlController.text.endsWith('.jpg') &&
       //         _imageUrlController.text.endsWith('.png') ||
@@ -289,9 +289,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      onPressed: 
-                        _saveForm,
-                      
+                      onPressed: _saveForm,
                       child: const Text(
                         'Submit',
                         style: TextStyle(
