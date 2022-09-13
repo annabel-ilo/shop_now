@@ -30,7 +30,7 @@ class CardItem extends StatelessWidget {
         ),
         color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
       ),
       child: Card(
           margin: const EdgeInsets.symmetric(
@@ -55,18 +55,18 @@ class CardItem extends StatelessWidget {
         return showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Do you want to remove the item from the cart?'),
+            title: const Text('Do you want to remove the item from the cart?'),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(false);
                   },
-                  child: Text('No')),
+                  child: const Text('No')),
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: Text('Yes')),
+                  child: const Text('Yes')),
             ],
           ),
         );

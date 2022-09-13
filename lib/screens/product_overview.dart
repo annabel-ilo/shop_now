@@ -1,11 +1,13 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_now/const/route.dart';
 import 'package:shop_now/models/cart.dart';
 import 'package:shop_now/widgets/app_drawer.dart';
 import 'package:shop_now/widgets/badge.dart';
-import 'package:shop_now/widgets/product_item.dart';
 
+import '../models/prod_provider.dart';
 import '../widgets/product_grid.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
@@ -17,6 +19,24 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorite = false;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<Products>(context, listen: false)
+        .fetchAndUpdateProduct()
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +53,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   }
                 });
               },
-              icon: Icon(Icons.more_vert),
+              icon: const Icon(Icons.more_vert),
               itemBuilder: (value) => [
-                    PopupMenuItem(
+                    const PopupMenuItem(
                       child: Text('Favorite'),
                       value: FilterOptions.favorite,
                     ),
-                    PopupMenuItem(
+                    const PopupMenuItem(
                       child: Text('Show All'),
                       value: FilterOptions.all,
                     ),
@@ -51,18 +71,27 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               color: Colors.grey,
             ),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart,
               ),
               onPressed: () {
+               
                 Navigator.of(context).pushNamed(cartScreenRoute);
               },
             ),
           )
         ],
       ),
-      drawer: AppDrawer(),
-      body: ProductGrid(
+      drawer: const AppDrawer(),
+      body:
+
+          // _isLoading
+
+          //     ? const Center(
+          //         child: CircularProgressIndicator(),
+          //       )
+          //     :
+          ProductGrid(
         showFavs: _showOnlyFavorite,
       ),
     );

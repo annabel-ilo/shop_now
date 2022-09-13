@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_now/const/route.dart';
@@ -56,12 +58,13 @@ class ProductItem extends StatelessWidget {
                   product.title,
                   product.price,
                 );
+                
                 Scaffold.of(context).hideCurrentSnackBar();
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Item added to cart'),
+                    content: const Text('Item added to cart'),
                     elevation: 20,
-                    duration: Duration(seconds: 2),
+                    duration: const Duration(seconds: 2),
                     action: SnackBarAction(
                       label: 'UNDO',
                       onPressed: () {
