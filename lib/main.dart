@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_now/const/route.dart';
@@ -33,11 +33,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (BuildContext context) => Cart(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (BuildContext context) => Orders(),
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'My Shop',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.indigo)
@@ -52,8 +53,8 @@ class MyApp extends StatelessWidget {
               const ProductsOverviewScreen(),
           cartScreenRoute: (context) => const CartScreen(),
           orderScreenRoute: (context) => const OrdersScreen(),
-          userProductsRoute:(context) => const UserProductsScreen(),
-          editProductScreenRoute :(context) => const EditProductScreen(),
+          userProductsRoute: (context) => const UserProductsScreen(),
+          editProductScreenRoute: (context) => const EditProductScreen(),
         },
       ),
     );
