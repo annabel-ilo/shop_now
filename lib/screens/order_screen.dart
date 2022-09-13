@@ -13,7 +13,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  Future ?_orderFuture;
+  Future ? _orderFuture;
 
   Future _obtainOrderFuture() {
     return Provider.of<Orders>(context).fetchAndSetOrder();
@@ -21,7 +21,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
-    _orderFuture = _obtainOrderFuture();
+    //_orderFuture = _obtainOrderFuture();
     super.initState();
   }
 
@@ -50,7 +50,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       order: orderData.orders[index],
                     ),
                   );
-                  return const SizedBox();
+                  return const Center(child: Text('Order Screen'));
                 });
               }
             }
